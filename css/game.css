@@ -33,7 +33,7 @@
     margin-bottom: 5px;
 }
 
-.game-cell-move:hover {
+.game-cell-point:hover {
     cursor: pointer;
 }
 
