@@ -29,7 +29,7 @@ class Enemy {
         this.type = 'enemy';
     }
 
-    move() {
+    move(game) {
 
     }
 }
@@ -38,6 +38,29 @@ class VerticalEnemy extends Enemy {
     constructor(x, y) {
         super(x, y);
         this.name = 'vertical-enemy';
+        this.direction = 'down';
+    }
+
+    move(game) {
+        let field = game.board.field;
+        if(this.direction === 'down' && field[this.X - 1] !== undefined && field[this.X - 1][this.Y] !== undefined && field[this.X - 1][this.Y] instanceof Floor && !(field[this.X - 1][this.Y] instanceof Enemy)) {
+            if(field[this.X - 1][this.Y].object instanceof Player) {
+                game.hitPlayer();
+            } else {
+                this.X--;
+            }
+        } else {
+            this.direction = 'up';
+        }
+        if(this.direction === 'up' && field[this.X + 1] !== undefined && field[this.X + 1][this.Y] !== undefined && field[this.X + 1][this.Y] instanceof Floor && !(field[this.X + 1][this.Y] instanceof Enemy)) {
+            if(field[this.X + 1][this.Y].object instanceof Player) {
+                game.hitPlayer();
+            } else {
+                this.X++;
+            }
+        } else {
+            this.direction = 'down';
+        }
     }
 }
 
@@ -45,6 +68,29 @@ class HorizontalEnemy extends Enemy {
     constructor(x, y) {
         super(x, y);
         this.name = 'horizontal-enemy';
+        this.direction = 'left';
+    }
+
+    move(game) {
+        let field = game.board.field;
+        if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1] instanceof Floor && !(field[this.X][this.Y - 1] instanceof Enemy)) {
+            if(field[this.X][this.Y - 1].object instanceof Player) {
+                game.hitPlayer();
+            } else {
+                this.Y--;
+            }
+        } else {
+            this.direction = 'right';
+        }
+        if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1] instanceof Floor && !(field[this.X][this.Y + 1] instanceof Enemy)) {
+            if(field[this.X][this.Y + 1].object instanceof Player) {
+                game.hitPlayer();
+            } else {
+                this.Y++;
+            }
+        } else {
+            this.direction = 'left';
+        }
     }
 }
 
@@ -68,6 +114,7 @@ class Floor extends Location {
 
 class Player {
     constructor(x, y) {
+        this.hitPoints = 3;
         this.X = x;
         this.Y = y;
         this.type = 'player';
@@ -110,7 +157,7 @@ class Board {
     }
 
     export() {
-        return JSON.stringify({size: this.size, field: JSON.stringify(this.table)});
+        return JSON.stringify({size: this.size, field: JSON.stringify(this.field)});
     }
 
     draw() {
@@ -122,6 +169,7 @@ class Board {
             let rowElement = document.createElement('div');
             rowElement.className = 'game-row';
             for(let cell of row) {
+                cell.object = undefined;
                 let cellElement = document.createElement('div');
                 cellElement.className = 'game-cell game-cell-' + cell.name;
                 cellElement.id = 'game-cell-' + cell.X + '-' + cell.Y;
@@ -230,8 +278,23 @@ class Game {
             }
         }
 
+        for(let enemy of this.objects.objects) {
+            if(enemy instanceof Enemy) {
+                enemy.move(this);
+            }
+        }
+
         this.board.draw();
         this.objects.draw();
+    }
+
+    hitPlayer() {
+        this.player.hitPoints--;
+        console.log('Enemy attacks player! Player\'s HP: ' + this.player.hitPoints);
+        if(this.player.hitPoints <= 0) {
+            alert('game over');
+            location.reload();
+        }
     }
 }
 
