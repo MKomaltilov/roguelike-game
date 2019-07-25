@@ -1,0 +1,53 @@
+#game {
+    padding: 50px;
+    background-color: black;
+    width: 430px;
+}
+
+.game-row {
+    display: table;
+}
+
+.game-cell {
+    display: table-cell;
+    border: 1px solid black;
+    min-width: 40px;
+    height: 40px;
+    text-align: center;
+    /*padding-top: 10px;*/
+}
+
+.game-cell-wall {
+    background-color: black;
+}
+.game-cell-floor {
+    background-color: white;
+}
+
+.game-empty-field:hover {
+    cursor: pointer;
+    background-color: #909090;
+}
+
+.game-settings {
+    margin-bottom: 5px;
+}
+
+.game-cell-move:hover {
+    cursor: pointer;
+}
+
+.game-object {
+    width: 10px;
+    height: 10px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.game-object-enemy {
+    background-color: red;
+}
+
+.game-object-player {
+    background-color: green;
+}
