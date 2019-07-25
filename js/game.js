@@ -193,7 +193,11 @@ class GameObjects {
             player,
             new VerticalEnemy(5, 7),
             new VerticalEnemy(6, 6),
-            new HorizontalEnemy(2, 5)
+            new VerticalEnemy(3, 2),
+            new HorizontalEnemy(2, 5),
+            new HorizontalEnemy(3, 1),
+            new HorizontalEnemy(0, 3),
+            new HorizontalEnemy(6, 4)
         ];
         this.field = field;
         this.game = game;
@@ -260,7 +264,7 @@ class Game {
     action(x, y) {
         if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object === undefined) {
             console.log('Move to ' + x + ', ' + y);
-            this.board.field[this.player.X][this.player.Y].object = undefined; 
+            //this.board.field[this.player.X][this.player.Y].object = undefined; 
             this.player.X = x;
             this.player.Y = y;
             this.board.field[this.player.X][this.player.Y].object = this.player;
@@ -274,7 +278,7 @@ class Game {
                         this.objects.objects.splice(i, 1);
                     }
                 }
-                this.board.field[x][y].object = undefined;
+                //this.board.field[x][y].object = undefined;
             }
         }
 
