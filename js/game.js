@@ -43,19 +43,25 @@ class VerticalEnemy extends Enemy {
 
     move(game) {
         let field = game.board.field;
-        if(this.direction === 'down' && field[this.X - 1] !== undefined && field[this.X - 1][this.Y] !== undefined && field[this.X - 1][this.Y] instanceof Floor && !(field[this.X - 1][this.Y] instanceof Enemy)) {
+        if(this.direction === 'down' && field[this.X - 1] !== undefined && field[this.X - 1][this.Y] !== undefined && field[this.X - 1][this.Y] instanceof Floor) {
             if(field[this.X - 1][this.Y].object instanceof Player) {
                 game.hitPlayer();
+            } else if(field[this.X - 1][this.Y].object instanceof Enemy) {
+                this.direction = 'up';
             } else {
+                field[this.X][this.Y].object = undefined;
                 this.X--;
             }
         } else {
             this.direction = 'up';
         }
-        if(this.direction === 'up' && field[this.X + 1] !== undefined && field[this.X + 1][this.Y] !== undefined && field[this.X + 1][this.Y] instanceof Floor && !(field[this.X + 1][this.Y] instanceof Enemy)) {
+        if(this.direction === 'up' && field[this.X + 1] !== undefined && field[this.X + 1][this.Y] !== undefined && field[this.X + 1][this.Y] instanceof Floor) {
             if(field[this.X + 1][this.Y].object instanceof Player) {
                 game.hitPlayer();
+            } else if(field[this.X + 1][this.Y].object instanceof Enemy) {
+                this.direction = 'down';
             } else {
+                field[this.X][this.Y].object = undefined;
                 this.X++;
             }
         } else {
@@ -73,19 +79,25 @@ class HorizontalEnemy extends Enemy {
 
     move(game) {
         let field = game.board.field;
-        if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1] instanceof Floor && !(field[this.X][this.Y - 1] instanceof Enemy)) {
+        if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1] instanceof Floor) {
             if(field[this.X][this.Y - 1].object instanceof Player) {
                 game.hitPlayer();
+            } else if(field[this.X][this.Y - 1].object instanceof Enemy) {
+                this.direction = 'right';
             } else {
+                field[this.X][this.Y].object = undefined;
                 this.Y--;
             }
         } else {
             this.direction = 'right';
         }
-        if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1] instanceof Floor && !(field[this.X][this.Y + 1] instanceof Enemy)) {
+        if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1] instanceof Floor) {
             if(field[this.X][this.Y + 1].object instanceof Player) {
                 game.hitPlayer();
+            } else if(field[this.X][this.Y + 1].object instanceof Enemy) {
+                this.direction = 'left';
             } else {
+                field[this.X][this.Y].object = undefined;
                 this.Y++;
             }
         } else {
@@ -112,6 +124,14 @@ class Floor extends Location {
     }
 }
 
+class Finish extends Floor {
+    constructor(x, y) {
+        super(x, y);
+        this.name = 'finish';
+    }
+}
+
+
 class Player {
     constructor(x, y) {
         this.hitPoints = 3;
@@ -133,7 +153,7 @@ class Board {
             [1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
             [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
             [1, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 1, 1, 1, 0, 1, 1, 1],
+            ['F', 0, 0, 1, 1, 1, 0, 1, 1, 1],
             [1, 0, 0, 1, 1, 1, 0, 0, 0, 1],
             [1, 1, 0, 1, 0, 0, 0, 0, 0, 1],
             [1, 1, 0, 1, 0, 0, 0, 0, 1, 1],
@@ -144,10 +164,16 @@ class Board {
 
         for(let x in this.field) {
             for(let y in this.field[x]) {
-                if(this.field[x][y] === 0) {
-                    this.field[x][y] = new Floor(x, y);
-                } else {
-                    this.field[x][y] = new Wall(x, y);
+                switch(this.field[x][y]) {
+                    case 0:
+                        this.field[x][y] = new Floor(x, y);
+                        break;
+                    case 'F': 
+                        this.field[x][y] = new Finish(x, y);
+                        break;
+                    default:
+                        this.field[x][y] = new Wall(x, y);
+                        break;
                 }
             }
         }
@@ -264,7 +290,7 @@ class Game {
     action(x, y) {
         if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object === undefined) {
             console.log('Move to ' + x + ', ' + y);
-            //this.board.field[this.player.X][this.player.Y].object = undefined; 
+            this.board.field[this.player.X][this.player.Y].object = undefined; 
             this.player.X = x;
             this.player.Y = y;
             this.board.field[this.player.X][this.player.Y].object = this.player;
@@ -278,7 +304,7 @@ class Game {
                         this.objects.objects.splice(i, 1);
                     }
                 }
-                //this.board.field[x][y].object = undefined;
+                this.board.field[x][y].object = undefined;
             }
         }
 
@@ -290,6 +316,11 @@ class Game {
 
         this.board.draw();
         this.objects.draw();
+
+        if(this.board.field[this.player.X][this.player.Y] instanceof Finish) {
+            alert('Player won!');
+            location.reload();
+        }
     }
 
     hitPlayer() {

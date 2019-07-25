@@ -20,8 +20,13 @@
 .game-cell-wall {
     background-color: black;
 }
+
 .game-cell-floor {
     background-color: white;
+}
+
+.game-cell-finish {
+    background-color: cyan;
 }
 
 .game-empty-field:hover {
