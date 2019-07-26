@@ -28,7 +28,7 @@ class Enemy {
         this.type = 'enemy';
     }
 
-    move(game) {
+    action(game) {
 
     }
 }
@@ -40,7 +40,7 @@ class VerticalEnemy extends Enemy {
         this.direction = 'down';
     }
 
-    move(game) {
+    action(game) {
         let field = game.board.field;
         if(this.direction === 'down' && field[this.X - 1] !== undefined && field[this.X - 1][this.Y] !== undefined && field[this.X - 1][this.Y] instanceof Floor) {
             if(field[this.X - 1][this.Y].object instanceof Player) {
@@ -76,7 +76,7 @@ class HorizontalEnemy extends Enemy {
         this.direction = 'left';
     }
 
-    move(game) {
+    action(game) {
         let field = game.board.field;
         if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1] instanceof Floor) {
             if(field[this.X][this.Y - 1].object instanceof Player) {
@@ -128,6 +128,45 @@ class Finish extends Floor {
         super(x, y);
         this.name = 'finish';
     }
+
+    onStep(game) {
+        alert('Player won!');
+        location.reload();
+    }
+}
+
+class Teleport extends Floor {
+    constructor(x, y) {
+        super(x, y);
+        this.name = 'teleport';
+    }
+
+    onStep(game) {
+        let teleports = [];
+        for(let x in game.board.field) {
+            for(let y in game.board.field[x]) {
+                let object = game.board.field[x][y];
+                if(object instanceof Teleport) {
+                    teleports.push(object);
+                }
+            }
+        }
+        
+        let newLocation = game.instruments.shuffleArray(teleports)[0];
+        if(newLocation.object === undefined) {
+            let x = game.player.X;
+            let y = game.player.Y;
+            game.player.X = newLocation.X;
+            game.player.Y = newLocation.Y;
+            newLocation.object = game.player;
+            game.board.field[x][y].object = undefined;
+            console.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y);
+        } else {
+            console.log(newLocation);
+            console.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
+        }
+        
+    }
 }
 
 
@@ -149,16 +188,16 @@ class Board {
         this._fieldElement = div;
         
         this.field = [
-            ['1', '0', '0', '0', '0', '0', '0', '0', '1', '1'],
+            ['T', '0', '0', '0', '0', '0', '0', '0', '1', '1'],
             ['1', '1', '0', '1', '0', '1', '1', '0', '1', '1'],
-            ['1', '1', '0', '1', '0', '0', '0', '0', '0', '0'],
+            ['1', '1', '0', '1', '0', '0', '0', '0', '0', 'T'],
             ['F', '0', '0', '0', '0', '1', '0', '1', '1', '1'],
             ['1', '0', '0', '1', '1', '1', '0', '0', '0', '1'],
             ['1', '1', '0', '1', '0', '0', '0', '0', '0', '1'],
             ['1', '1', '0', '1', '0', '0', '0', '0', '1', '1'],
             ['1', '1', '0', '1', '0', '0', '1', '0', '0', '1'],
             ['1', '0', '1', '1', '0', '1', '1', '0', '1', '1'],
-            ['0', '0', '0', '0', '0', '0', '0', '0', '0', '1']
+            ['0', '0', '0', '0', '0', '0', '0', '0', '0', 'T']
         ];
 
         for(let x in this.field) {
@@ -169,6 +208,9 @@ class Board {
                         break;
                     case 'F': 
                         this.field[x][y] = new Finish(x, y);
+                        break;
+                    case 'T': 
+                        this.field[x][y] = new Teleport(x, y);
                         break;
                     default:
                         this.field[x][y] = new Wall(x, y);
@@ -200,7 +242,6 @@ class Board {
                 cellElement.id = 'game-cell-' + cell.X + '-' + cell.Y;
                 cellElement.innerHTML = '<div class="game-object"></div>';        
                 rowElement.appendChild(cellElement);
-                //console.log(cell);
             }
             fieldElement.appendChild(rowElement);
         }
@@ -243,7 +284,13 @@ class GameObjects {
             element.innerHTML = '';
             element.appendChild(objectElement);
             
-            if(object instanceof Player && field !== null) {
+            if(object instanceof Player) {
+                let element = document.getElementById('game-cell-' + (object.X) + '-' + object.Y);
+                    element.className += ' game-cell-point';
+                    element.onclick = function() {
+                        game.action(object.X, object.Y);
+                    }
+                
                 if(field[object.X - 1] !== undefined && field[object.X - 1][object.Y] instanceof Floor) {
                     let element = document.getElementById('game-cell-' + (object.X - 1) + '-' + object.Y);
                     element.className += ' game-cell-point';
@@ -251,18 +298,18 @@ class GameObjects {
                         game.action(object.X - 1, object.Y);
                     }
                 }
-                if(field[object.X + 1] !== undefined && field[object.X + 1][object.Y] instanceof Floor) {
-                    let element = document.getElementById('game-cell-' + (object.X + 1) + '-' + object.Y);
+                if(field[object.X - 0 + 1] !== undefined && field[object.X - 0 + 1][object.Y] instanceof Floor) {
+                    let element = document.getElementById('game-cell-' + (object.X - 0 + 1) + '-' + object.Y);
                     element.className += ' game-cell-point';
                     element.onclick = function() {
-                        game.action(object.X + 1, object.Y);
+                        game.action(object.X - 0 + 1, object.Y);
                     }
                 }
-                if(field[object.X][object.Y + 1] !== undefined && field[object.X][object.Y + 1] instanceof Floor) {
-                    let element = document.getElementById('game-cell-' + object.X + '-' + (object.Y + 1));
+                if(field[object.X][object.Y - 0 + 1] !== undefined && field[object.X][object.Y - 0 + 1] instanceof Floor) {
+                    let element = document.getElementById('game-cell-' + object.X + '-' + (object.Y - 0 + 1));
                     element.className += ' game-cell-point';
                     element.onclick = function() {
-                        game.action(object.X, object.Y + 1);
+                        game.action(object.X, object.Y - 0 + 1);
                     }
                 }
                 if(field[object.X][object.Y - 1] !== undefined && field[object.X][object.Y - 1] instanceof Floor) {
@@ -284,6 +331,7 @@ class Game {
         this.player = new Player();
         this.board = new Board(size, div);
         this.objects = new GameObjects(this.board.field, this.player, this);
+        this.instruments = new Instruments();
     }
 
     action(x, y) {
@@ -309,17 +357,16 @@ class Game {
 
         for(let enemy of this.objects.objects) {
             if(enemy instanceof Enemy) {
-                enemy.move(this);
+                enemy.action(this);
             }
         }
+
+        this.board.field[this.player.X][this.player.Y].onStep(this);
 
         this.board.draw();
         this.objects.draw();
 
-        if(this.board.field[this.player.X][this.player.Y] instanceof Finish) {
-            alert('Player won!');
-            location.reload();
-        }
+
     }
 
     hitPlayer() {
@@ -329,6 +376,23 @@ class Game {
             alert('game over');
             location.reload();
         }
+    }
+}
+
+class Instruments {
+    constructor() {
+
+    }
+
+    shuffleArray(arr){
+        var j, temp;
+        for(var i = arr.length - 1; i > 0; i--){
+            j = Math.floor(Math.random()*(i + 1));
+            temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
     }
 }
 

@@ -29,6 +29,10 @@
     background-color: cyan;
 }
 
+.game-cell-teleport {
+    background-color: yellow;
+}
+
 .game-empty-field:hover {
     cursor: pointer;
     background-color: #909090;
