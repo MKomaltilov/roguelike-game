@@ -135,6 +135,19 @@ class Finish extends Floor {
     }
 }
 
+class Trap extends Floor {
+    constructor(x, y) {
+        super(x, y);
+        this.name = 'trap';
+    }
+
+    onStep(game) {
+        game.hitPlayer();
+        console.log(game.board.field[this.X][this.Y]);
+        game.board.field[this.X][this.Y] = new Floor(this.X, this.Y);
+    }
+}
+
 class Teleport extends Floor {
     constructor(x, y) {
         super(x, y);
@@ -190,13 +203,13 @@ class Board {
             ['T', '0', '0', '0', '0', '0', '0', '0', '1', '1'],
             ['1', '1', '0', '1', '0', '1', '1', '0', '1', '1'],
             ['1', '1', '0', '1', '0', '0', '0', '0', '0', 'T'],
-            ['F', '0', '0', '0', '0', '1', '0', '1', '1', '1'],
+            ['F', '0', '0', '0', 'X', '1', '0', '1', '1', '1'],
             ['1', '0', '0', '1', '1', '1', '0', '0', '0', '1'],
-            ['1', '1', '0', '1', '0', '0', '0', '0', '0', '1'],
+            ['1', '1', '0', '1', '0', '0', 'X', '0', '0', '1'],
             ['1', '1', '0', '1', '0', '0', '0', '0', '1', '1'],
-            ['1', '1', '0', '1', '0', '0', '1', '0', '0', '1'],
+            ['1', '1', '0', '1', '0', '0', '1', 'X', '0', '1'],
             ['1', '0', '1', '1', '0', '1', '1', '0', '1', '1'],
-            ['0', '0', '0', '0', '0', '0', '0', '0', '0', 'T']
+            ['0', '0', '0', '0', '0', 'X', '0', '0', '0', 'T']
         ];
 
         for(let x in this.field) {
@@ -210,6 +223,9 @@ class Board {
                         break;
                     case 'T': 
                         this.field[x][y] = new Teleport(x, y);
+                        break;
+                    case 'X': 
+                        this.field[x][y] = new Trap(x, y);
                         break;
                     default:
                         this.field[x][y] = new Wall(x, y);
@@ -375,7 +391,7 @@ class Game {
 
     hitPlayer() {
         this.player.hitPoints--;
-        this.log('Enemy attacks player! Player\'s HP: ' + this.player.hitPoints);
+        this.log('Player\'s HP: ' + this.player.hitPoints);
         if(this.player.hitPoints <= 0) {
             alert('game over');
             location.reload();

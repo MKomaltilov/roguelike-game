@@ -33,6 +33,10 @@
     background-color: yellow;
 }
 
+.game-cell-trap {
+    background-color: gray;
+}
+
 .game-empty-field:hover {
     cursor: pointer;
     background-color: #909090;
