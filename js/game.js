@@ -160,10 +160,9 @@ class Teleport extends Floor {
             game.player.Y = newLocation.Y;
             newLocation.object = game.player;
             game.board.field[x][y].object = undefined;
-            console.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y);
+            game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y);
         } else {
-            console.log(newLocation);
-            console.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
+            game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
         }
         
     }
@@ -260,7 +259,10 @@ class GameObjects {
             new VerticalEnemy(5, 7),
             new VerticalEnemy(6, 6),
             new VerticalEnemy(3, 2),
+            new VerticalEnemy(1, 4),
+            new VerticalEnemy(1, 2),
             new HorizontalEnemy(2, 5),
+            new HorizontalEnemy(5, 4),
             new HorizontalEnemy(3, 1),
             new HorizontalEnemy(0, 3),
             new HorizontalEnemy(6, 4)
@@ -327,23 +329,25 @@ class GameObjects {
 
 
 class Game {
-    constructor(size, div) {
+    constructor(size, gameDiv, logsDiv) {
         this.player = new Player();
-        this.board = new Board(size, div);
+        this.board = new Board(size, gameDiv);
         this.objects = new GameObjects(this.board.field, this.player, this);
         this.instruments = new Instruments();
+        this.logsElement = logsDiv;
+        this.logs = [];
     }
 
     action(x, y) {
         if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object === undefined) {
-            console.log('Move to ' + x + ', ' + y);
+            this.log('Move to ' + x + ', ' + y);
             this.board.field[this.player.X][this.player.Y].object = undefined; 
             this.player.X = x;
             this.player.Y = y;
             this.board.field[this.player.X][this.player.Y].object = this.player;
             
         } else if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object instanceof Enemy) {
-            console.log('Fight started!');
+            this.log('Fight started!');
             this.board.field[x][y].object.hitPoints--;
             if(this.board.field[x][y].object.hitPoints === 0) {
                 for(let i in this.objects.objects) {
@@ -371,10 +375,24 @@ class Game {
 
     hitPlayer() {
         this.player.hitPoints--;
-        console.log('Enemy attacks player! Player\'s HP: ' + this.player.hitPoints);
+        this.log('Enemy attacks player! Player\'s HP: ' + this.player.hitPoints);
         if(this.player.hitPoints <= 0) {
             alert('game over');
             location.reload();
+        }
+    }
+
+    log(string) {
+        this.logs.push(string);
+        this.drawLogs();
+    }
+
+    drawLogs() {
+        this.logsElement.innerHTML = '';
+        for(let log of this.logs) {
+            let line = document.createElement('p');
+            line.innerHTML = log;
+            this.logsElement.appendChild(line);
         }
     }
 }
@@ -396,6 +414,6 @@ class Instruments {
     }
 }
 
-let game = new Game(10, document.getElementById('game'));
+let game = new Game(10, document.getElementById('game'), document.getElementById('game-logs'));
 
 console.log(game);
