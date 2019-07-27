@@ -26,6 +26,7 @@ class Enemy {
         this.Y = y;
         this.name;
         this.type = 'enemy';
+        this.hitChance = 5;
     }
 
     action(game) {
@@ -44,6 +45,7 @@ class VerticalEnemy extends Enemy {
         let field = game.board.field;
         if(this.direction === 'down' && field[this.X - 1] !== undefined && field[this.X - 1][this.Y] !== undefined && field[this.X - 1][this.Y] instanceof Floor) {
             if(field[this.X - 1][this.Y].object instanceof Player) {
+                game.log('Enemy hits player');
                 game.hitPlayer();
             } else if(field[this.X - 1][this.Y].object instanceof Enemy) {
                 this.direction = 'up';
@@ -56,6 +58,7 @@ class VerticalEnemy extends Enemy {
         }
         if(this.direction === 'up' && field[this.X + 1] !== undefined && field[this.X + 1][this.Y] !== undefined && field[this.X + 1][this.Y] instanceof Floor) {
             if(field[this.X + 1][this.Y].object instanceof Player) {
+                game.log('Enemy hits player');
                 game.hitPlayer();
             } else if(field[this.X + 1][this.Y].object instanceof Enemy) {
                 this.direction = 'down';
@@ -80,6 +83,7 @@ class HorizontalEnemy extends Enemy {
         let field = game.board.field;
         if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1] instanceof Floor) {
             if(field[this.X][this.Y - 1].object instanceof Player) {
+                game.log('Enemy hits player');
                 game.hitPlayer();
             } else if(field[this.X][this.Y - 1].object instanceof Enemy) {
                 this.direction = 'right';
@@ -92,6 +96,7 @@ class HorizontalEnemy extends Enemy {
         }
         if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1] instanceof Floor) {
             if(field[this.X][this.Y + 1].object instanceof Player) {
+                game.log('Enemy hits player');
                 game.hitPlayer();
             } else if(field[this.X][this.Y + 1].object instanceof Enemy) {
                 this.direction = 'left';
@@ -142,8 +147,8 @@ class Trap extends Floor {
     }
 
     onStep(game) {
+        game.log('Player steps on trap');
         game.hitPlayer();
-        console.log(game.board.field[this.X][this.Y]);
         game.board.field[this.X][this.Y] = new Floor(this.X, this.Y);
     }
 }
@@ -188,6 +193,7 @@ class Player {
         this.X = x;
         this.Y = y;
         this.type = 'player';
+        this.hitChance = 4;
     }
 
 }
@@ -345,12 +351,14 @@ class GameObjects {
 
 
 class Game {
-    constructor(size, gameDiv, logsDiv) {
+    constructor(size, gameDiv, logsDiv, statisticDiv) {
         this.player = new Player();
         this.board = new Board(size, gameDiv);
         this.objects = new GameObjects(this.board.field, this.player, this);
         this.instruments = new Instruments();
         this.logsElement = logsDiv;
+        this.statisticElement = statisticDiv;
+        this.drawStatistic();
         this.logs = [];
     }
 
@@ -364,14 +372,23 @@ class Game {
             
         } else if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object instanceof Enemy) {
             this.log('Fight started!');
-            this.board.field[x][y].object.hitPoints--;
-            if(this.board.field[x][y].object.hitPoints === 0) {
+            if(this.instruments.getRandomInRange(1, 6) >= this.player.hitChance) {
+                this.log('Player hits enemy');
+                this.board.field[x][y].object.hitPoints--;
+            } else {
+                this.log('Player misses');
+            }
+            
+            if(this.board.field[x][y].object.hitPoints <= 0) {
+                this.log('Enemy died');
                 for(let i in this.objects.objects) {
                     if(this.objects.objects[i].X === x && this.objects.objects[i].Y === y) {
                         this.objects.objects.splice(i, 1);
                     }
                 }
                 this.board.field[x][y].object = undefined;
+            } else {
+
             }
         }
 
@@ -385,8 +402,17 @@ class Game {
 
         this.board.draw();
         this.objects.draw();
+        this.drawStatistic();
 
 
+    }
+
+    drawStatistic() {
+        console.log(this.statisticElement);
+        this.statisticElement.innerHTML = '';
+        let playerHP = document.createElement('p');
+        playerHP.innerHTML = 'Player HP: ' + this.player.hitPoints;
+        this.statisticElement.appendChild(playerHP);
     }
 
     hitPlayer() {
@@ -399,15 +425,15 @@ class Game {
     }
 
     log(string) {
-        this.logs.push(string);
+        this.logs.push(this.instruments.getTime() + ' : ' + string);
         this.drawLogs();
     }
 
     drawLogs() {
         this.logsElement.innerHTML = '';
-        for(let log of this.logs) {
+        for(let i = this.logs.length - 1; i >= 0; i--) {
             let line = document.createElement('p');
-            line.innerHTML = log;
+            line.innerHTML = this.logs[i];
             this.logsElement.appendChild(line);
         }
     }
@@ -428,8 +454,23 @@ class Instruments {
         }
         return arr;
     }
+
+    getRandomInRange(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    getTime() {
+        let date = new Date();
+        let time = '';
+        (date.getHours() < 10) ? time += '0' + date.getHours() : time += date.getHours();
+        time += ':';
+        (date.getMinutes() < 10) ? time += '0' + date.getMinutes() : time += date.getMinutes();
+        time += ':';
+        (date.getSeconds() < 10) ? time += '0' + date.getSeconds() : time += date.getSeconds();
+        return time;
+    }
 }
 
-let game = new Game(10, document.getElementById('game'), document.getElementById('game-logs'));
+let game = new Game(10, document.getElementById('game-field'), document.getElementById('game-logs'), document.getElementById('game-statistic'));
 
 console.log(game);

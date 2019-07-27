@@ -1,7 +1,17 @@
 #game {
+    display: table;
+}
+
+#game-statistic {
+    display: table-cell;
+    padding: 20px;
+}
+
+#game-field {
     padding: 50px;
     background-color: black;
     width: 400px;
+    display: table-cell;
 }
 
 .game-row {
