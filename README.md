@@ -6,3 +6,8 @@ should be:
 
 1. app for creating map
 2. app for play on map
+
+
+
+Thanks to:
+https://game-icons.net - for free icons for prototype

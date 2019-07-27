@@ -1,7 +1,7 @@
 #game {
     padding: 50px;
     background-color: black;
-    width: 430px;
+    width: 400px;
 }
 
 .game-row {
@@ -10,7 +10,7 @@
 
 .game-cell {
     display: table-cell;
-    border: 1px solid black;
+    border: 0px solid black;
     min-width: 40px;
     height: 40px;
     text-align: center;
@@ -18,7 +18,8 @@
 }
 
 .game-cell-wall {
-    background-color: black;
+    background-color: white;
+    background-image: url("../img/brick-wall.svg");
 }
 
 .game-cell-floor {
@@ -26,15 +27,18 @@
 }
 
 .game-cell-finish {
-    background-color: cyan;
+    background-color: rgb(150, 150, 250);
+    background-image: url("../img/dungeon-gate.svg");
 }
 
 .game-cell-teleport {
     background-color: yellow;
+    background-image: url("../img/teleport.svg");
 }
 
 .game-cell-trap {
-    background-color: gray;
+    background-color: rgb(250, 150, 150);
+    background-image: url("../img/wolf-trap.svg");
 }
 
 .game-empty-field:hover {
@@ -51,16 +55,18 @@
 }
 
 .game-object {
-    width: 10px;
-    height: 10px;
-    margin-top: 15px;
-    margin-left: 15px;
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
 .game-object-enemy {
     background-color: red;
+    background-image: url("../img/orc-head.svg");
 }
 
 .game-object-player {
     background-color: green;
+    background-image: url("../img/dwarf-helmet.svg");
 }
