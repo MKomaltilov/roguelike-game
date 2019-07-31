@@ -46,6 +46,11 @@
     background-image: url("../img/teleport.svg");
 }
 
+.game-cell-heal-fountain {
+    background-color: cyan;
+    background-image: url("../img/heal-fountain.svg");
+}
+
 .game-cell-trap {
     background-color: rgb(250, 150, 150);
     background-image: url("../img/wolf-trap.svg");

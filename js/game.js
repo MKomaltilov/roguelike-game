@@ -52,6 +52,7 @@ class VerticalEnemy extends Enemy {
             } else {
                 field[this.X][this.Y].object = undefined;
                 this.X--;
+                field[this.X][this.Y].object = this;
             }
         } else {
             this.direction = 'up';
@@ -65,6 +66,7 @@ class VerticalEnemy extends Enemy {
             } else {
                 field[this.X][this.Y].object = undefined;
                 this.X++;
+                field[this.X][this.Y].object = this;
             }
         } else {
             this.direction = 'down';
@@ -90,6 +92,7 @@ class HorizontalEnemy extends Enemy {
             } else {
                 field[this.X][this.Y].object = undefined;
                 this.Y--;
+                field[this.X][this.Y].object = this;
             }
         } else {
             this.direction = 'right';
@@ -103,6 +106,7 @@ class HorizontalEnemy extends Enemy {
             } else {
                 field[this.X][this.Y].object = undefined;
                 this.Y++;
+                field[this.X][this.Y].object = this;
             }
         } else {
             this.direction = 'left';
@@ -137,6 +141,18 @@ class Finish extends Floor {
     onStep(game) {
         alert('Player won!');
         location.reload();
+    }
+}
+
+class HealFountain extends Floor {
+    constructor(x, y) {
+        super(x, y);
+        this.name = 'heal-fountain';
+    }
+
+    onStep(game) {
+        if(game.player.hitPoints < 3) game.player.hitPoints++;
+        game.log('Player healed for 1HP. Total HP: ' + game.player.hitPoints);
     }
 }
 
@@ -206,7 +222,7 @@ class Board {
         this._fieldElement = div;
         
         this.field = [
-            ['T', '0', '0', '0', '0', '0', '0', '0', '1', '1'],
+            ['T', '0', '0', '0', '0', '0', '0', '0', 'H', '1'],
             ['1', '1', '0', '1', '0', '1', '1', '0', '1', '1'],
             ['1', '1', '0', '1', '0', '0', '0', '0', '0', 'T'],
             ['F', '0', '0', '0', 'X', '1', '0', '1', '1', '1'],
@@ -232,6 +248,9 @@ class Board {
                         break;
                     case 'X': 
                         this.field[x][y] = new Trap(x, y);
+                        break;
+                    case 'H': 
+                        this.field[x][y] = new HealFountain(x, y);
                         break;
                     default:
                         this.field[x][y] = new Wall(x, y);
@@ -392,23 +411,26 @@ class Game {
             }
         }
 
+        this.board.field[this.player.X][this.player.Y].onStep(this);
+        
+        this.board.draw();
+        this.objects.draw();
+        this.drawStatistic();
+
         for(let enemy of this.objects.objects) {
             if(enemy instanceof Enemy) {
                 enemy.action(this);
             }
         }
 
-        this.board.field[this.player.X][this.player.Y].onStep(this);
-
         this.board.draw();
         this.objects.draw();
         this.drawStatistic();
 
-
+        this.checkEnd();
     }
 
     drawStatistic() {
-        console.log(this.statisticElement);
         this.statisticElement.innerHTML = '';
         let playerHP = document.createElement('p');
         playerHP.innerHTML = 'Player HP: ' + this.player.hitPoints;
@@ -418,10 +440,6 @@ class Game {
     hitPlayer() {
         this.player.hitPoints--;
         this.log('Player\'s HP: ' + this.player.hitPoints);
-        if(this.player.hitPoints <= 0) {
-            alert('game over');
-            location.reload();
-        }
     }
 
     log(string) {
@@ -435,6 +453,13 @@ class Game {
             let line = document.createElement('p');
             line.innerHTML = this.logs[i];
             this.logsElement.appendChild(line);
+        }
+    }
+
+    checkEnd() {
+        if(this.player.hitPoints <= 0) {
+            alert('game over');
+            location.reload();
         }
     }
 }
