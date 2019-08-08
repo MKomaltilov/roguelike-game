@@ -1,11 +1,35 @@
-class Location {
+class GameObject {
+    constructor(x, y) {
+        this._X = x;
+        this._Y = y;
+    }
+
+    
+    get X() {
+        return Number(this._X);
+    }
+
+    set X(value) {
+        this._X = value;
+    }
+
+    get Y() {
+        return Number(this._Y);
+    }
+
+    set Y(value) {
+        this._Y = value;
+    }
+}
+
+class Location extends GameObject {
     
     constructor(x, y) {
+        super(x, y);
+
         this.name;
         this.type;
-        
-        this.X = x;
-        this.Y = y;
+
 
         this.interaction;
         this.isBlocked = false;
@@ -19,11 +43,10 @@ class Location {
     }
 }
 
-class Enemy {
+class Enemy extends GameObject {
     constructor(x, y) {
+        super(x, y);
         this.hitPoints = 1;
-        this.X = x;
-        this.Y = y;
         this.name;
         this.type = 'enemy';
         this.hitChance = 5;
@@ -32,6 +55,7 @@ class Enemy {
     action(game) {
 
     }
+
 }
 
 class VerticalEnemy extends Enemy {
@@ -203,11 +227,11 @@ class Teleport extends Floor {
 }
 
 
-class Player {
+class Player extends GameObject  {
     constructor(x, y) {
+        super(x, y);
         this.hitPoints = 3;
-        this.X = x;
-        this.Y = y;
+
         this.type = 'player';
         this.hitChance = 4;
     }
