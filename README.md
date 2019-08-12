@@ -8,8 +8,8 @@ how to run:
 2. Run "npm install -g webpack"
 3. Run "npm install -g webpack-cli"
 4. Run "npm install" from project root folder
-5. Run "webpack -w" in project root folder
-6. Run index.html from project root folder
+5. Run "webpack" in project root folder for build it once or "webpack -w" to run watcher
+6. Launch index.html from project root folder
 
 should be: 
 
