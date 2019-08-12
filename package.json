@@ -1,14 +1,17 @@
 {
   "name": "roguelike-game",
+  "productName": "roguelike-game",
   "version": "0.0.1",
   "description": "roguelike game engine",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-win": "electron-packager . rglike-game --overwrite --asar=true --platform=win32"
   },
   "author": "Marat Komaltilov",
   "license": "ISC",
   "devDependencies": {
+    "electron": "^6.0.1",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
   }

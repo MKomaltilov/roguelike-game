@@ -11,6 +11,11 @@ how to run:
 5. Run "webpack" in project root folder for build it once or "webpack -w" to run watcher
 6. Launch index.html from project root folder
 
+electron version:
+1. 1-5 steps from standart run
+2. Run "npm install -g eletron"
+3. Run "electron ." in project root folder
+
 should be: 
 
 1. app for creating map
