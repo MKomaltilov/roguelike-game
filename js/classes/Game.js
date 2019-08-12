@@ -68,7 +68,7 @@ export default class Game {
 
     drawStatistic() {
         this.statisticElement.innerHTML = '';
-        let playerHP = document.createElement('p');
+        let playerHP = document.createElement('span');
         playerHP.innerHTML = 'Player HP: ' + this.player.hitPoints;
         this.statisticElement.appendChild(playerHP);
     }
