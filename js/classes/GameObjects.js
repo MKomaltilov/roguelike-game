@@ -93,21 +93,25 @@ export default class GameObjects {
                 }
 
                 document.onkeydown = function(event) {
-                    event.preventDefault();
                     switch (event.keyCode) {
                         case 37:
+                            event.preventDefault();
                             if(movements.left === true) game.action(object.X, object.Y - 1);
                             break;
                         case 38:
+                            event.preventDefault();
                             if(movements.up === true) game.action(object.X - 1, object.Y);
                             break;
                         case 39:
+                            event.preventDefault();
                             if(movements.right === true) game.action(object.X, object.Y + 1);
                             break;
                         case 40:
+                            event.preventDefault();
                             if(movements.down === true) game.action(object.X + 1, object.Y);
                             break;
                         case 32:
+                            event.preventDefault();
                             game.action(object.X, object.Y);
                             break;
                     }
