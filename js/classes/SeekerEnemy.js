@@ -3,7 +3,7 @@ import Floor from './Floor.js';
 import Player from './Player.js';
 import PathFinder from './PathFinder.js';
 
-export default class VerticalEnemy extends Enemy {
+export default class SeekerEnemy extends Enemy {
     constructor(x, y) {
         super(x, y);
         this.name = 'seeker-enemy';

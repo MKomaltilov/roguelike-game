@@ -87,6 +87,10 @@ html {
     background-image: url("../img/orc-head.svg");
 }
 
+.seeker-enemy {
+    background-image: url("../img/werewolf.svg");
+}
+
 .game-object-player {
     background-color: green;
     background-image: url("../img/dwarf-helmet.svg");

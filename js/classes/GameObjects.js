@@ -51,7 +51,7 @@ export default class GameObjects {
         for(let object of objects) {
             field[object.X][object.Y].object = object;
             let objectElement = document.createElement('div');
-            objectElement.className = 'game-object game-object-'+ object.type;
+            objectElement.className = 'game-object game-object-'+ object.type + ' ' + object.name;
             let element = document.getElementById('game-cell-' + object.X + '-' + object.Y);
             element.innerHTML = '';
             element.appendChild(objectElement);

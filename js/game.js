@@ -15,7 +15,7 @@ let level_1 = {
     ],
     objects: [
         {
-            name: 'horizontal-enemy',
+            name: 'seeker-enemy',
             x: 2,
             y: 5
         },
