@@ -4,22 +4,27 @@ import HorizontalEnemy from './HorizontalEnemy.js';
 import Floor from './Floor.js';
 
 export default class GameObjects {
-    constructor(field, player, game) {
+    constructor(objects, field, player, game) {
         player.X = 9;
         player.Y = 0;
-        this.objects = [
-            player,
-            new VerticalEnemy(5, 7),
-            new VerticalEnemy(6, 6),
-            new VerticalEnemy(3, 2),
-            new VerticalEnemy(1, 4),
-            new VerticalEnemy(1, 2),
-            new HorizontalEnemy(2, 5),
-            new HorizontalEnemy(5, 4),
-            new HorizontalEnemy(3, 1),
-            new HorizontalEnemy(0, 3),
-            new HorizontalEnemy(6, 4)
-        ];
+        this.externalObjects = objects;
+        this.objects = [player];
+
+        for(let i = 0; i < objects.length; i++) {
+            let gameObject;
+
+            switch(objects[i].name) {
+                case 'horizontal-enemy':
+                    gameObject = new HorizontalEnemy(objects[i].x, objects[i].y);
+                    break;
+                case 'vertical-enemy':
+                    gameObject = new VerticalEnemy(objects[i].x, objects[i].y);
+                    break;
+            }
+
+            this.objects.push(gameObject);
+        }
+        
         this.field = field;
         this.game = game;
         this.player = player;

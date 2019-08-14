@@ -6,10 +6,10 @@ import Board from './Board.js';
 import Enemy from './Enemy.js'; 
 
 export default class Game {
-    constructor(size, gameDiv, logsDiv, statisticDiv) {
+    constructor(gameData, gameDiv, logsDiv, statisticDiv) {
         this.player = new Player();
-        this.board = new Board(size, gameDiv);
-        this.objects = new GameObjects(this.board.field, this.player, this);
+        this.board = new Board(gameDiv, gameData.field);
+        this.objects = new GameObjects(gameData.objects, this.board.field, this.player, this);
         this.instruments = new Instruments();
         this.logsElement = logsDiv;
         this.statisticElement = statisticDiv;
