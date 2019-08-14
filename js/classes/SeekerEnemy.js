@@ -11,39 +11,34 @@ export default class VerticalEnemy extends Enemy {
 
     action(game) {
         let field = game.board.field;
-/*        if(this.direction === 'down' && field[this.X - 1] !== undefined && field[this.X - 1][this.Y] !== undefined && field[this.X - 1][this.Y] instanceof Floor) {
-            if(field[this.X - 1][this.Y].object instanceof Player) {
-                game.log('Enemy hits player');
-                game.hitPlayer();
-            } else if(field[this.X - 1][this.Y].object instanceof Enemy) {
-                this.direction = 'up';
-            } else {
-                field[this.X][this.Y].object = undefined;
-                this.X--;
-                field[this.X][this.Y].object = this;
-            }
-        } else {
-            this.direction = 'up';
-        }
-        if(this.direction === 'up' && field[this.X + 1] !== undefined && field[this.X + 1][this.Y] !== undefined && field[this.X + 1][this.Y] instanceof Floor) {
-            if(field[this.X + 1][this.Y].object instanceof Player) {
-                game.log('Enemy hits player');
-                game.hitPlayer();
-            } else if(field[this.X + 1][this.Y].object instanceof Enemy) {
-                this.direction = 'down';
-            } else {
-                field[this.X][this.Y].object = undefined;
-                this.X++;
-                field[this.X][this.Y].object = this;
-            }
-        } else {
-            this.direction = 'down';
-        }
-*/
 		var nextPoint = PathFinder.getNextPoint(game, [this.X, this.Y], [game.player.X, game.player.Y]);
+		/* <TODO: Ruslan Tumasov: Replace it to Vector2dDistance> */
 		if (nextPoint !== undefined) {
 			this.X = nextPoint[0];
 			this.Y = nextPoint[1];
+		} else {
+			let isPlayerFound = false;
+			if (field[this.X - 1] !== undefined && field[this.X - 1][this.Y].object instanceof Player) {
+				isPlayerFound = true;
+			}
+			
+			if (!isPlayerFound && field[this.X + 1] !== undefined && field[this.X + 1][this.Y].object instanceof Player) {
+				isPlayerFound = true;
+			}
+			
+			if (!isPlayerFound && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1].object instanceof Player) {
+				isPlayerFound = true;
+			}
+
+			if (!isPlayerFound && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1].object instanceof Player) {
+				isPlayerFound = true;
+			}
+			
+			if (isPlayerFound) {
+				game.log('Enemy hits player');
+				game.hitPlayer();
+			}
 		}
+		/* </TODO: Ruslan Tumasov: Replace it to Vector2dDistance> */
     }
 }
