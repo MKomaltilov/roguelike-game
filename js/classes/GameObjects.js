@@ -1,12 +1,14 @@
 import Player from './Player.js';
 import VerticalEnemy from './VerticalEnemy.js';
 import HorizontalEnemy from './HorizontalEnemy.js';
+import SeekerEnemy from './SeekerEnemy.js';
 import Floor from './Floor.js';
 
 export default class GameObjects {
     constructor(objects, field, player, game) {
         player.X = 9;
         player.Y = 0;
+
         this.externalObjects = objects;
         this.objects = [player];
 
@@ -20,11 +22,15 @@ export default class GameObjects {
                 case 'vertical-enemy':
                     gameObject = new VerticalEnemy(objects[i].x, objects[i].y);
                     break;
+                case 'seeker-enemy':
+                    gameObject = new SeekerEnemy(objects[i].x, objects[i].y);
+                    break;
             }
 
             this.objects.push(gameObject);
         }
         
+
         this.field = field;
         this.game = game;
         this.player = player;
