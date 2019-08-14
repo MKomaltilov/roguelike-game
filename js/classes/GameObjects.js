@@ -1,6 +1,7 @@
 import Player from './Player.js';
 import VerticalEnemy from './VerticalEnemy.js';
 import HorizontalEnemy from './HorizontalEnemy.js';
+import SeekerEnemy from './SeekerEnemy.js';
 import Floor from './Floor.js';
 
 export default class GameObjects {
@@ -9,16 +10,17 @@ export default class GameObjects {
         player.Y = 0;
         this.objects = [
             player,
-            new VerticalEnemy(5, 7),
-            new VerticalEnemy(6, 6),
-            new VerticalEnemy(3, 2),
-            new VerticalEnemy(1, 4),
-            new VerticalEnemy(1, 2),
-            new HorizontalEnemy(2, 5),
-            new HorizontalEnemy(5, 4),
-            new HorizontalEnemy(3, 1),
-            new HorizontalEnemy(0, 3),
-            new HorizontalEnemy(6, 4)
+            new SeekerEnemy(2, 5),
+			new SeekerEnemy(0, 1),
+//            new VerticalEnemy(6, 6),
+//            new VerticalEnemy(3, 2),
+//            new VerticalEnemy(1, 4),
+//            new VerticalEnemy(1, 2),
+//            new HorizontalEnemy(5, 7),
+//            new HorizontalEnemy(5, 4),
+//            new HorizontalEnemy(3, 1),
+//            new HorizontalEnemy(0, 3),
+//            new HorizontalEnemy(6, 4)
         ];
         this.field = field;
         this.game = game;
