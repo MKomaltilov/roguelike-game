@@ -7,7 +7,7 @@ export default class Finish extends Floor {
     }
 
     onStep(game) {
-        alert('Player won!');
+        alert('Player won in ' + game.turns + ' turns and ' + game.enemiesKilled + ' kills!');
         location.reload();
     }
 }

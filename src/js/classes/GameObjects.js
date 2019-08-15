@@ -6,28 +6,35 @@ import Floor from './Floor.js';
 
 export default class GameObjects {
     constructor(objects, field, player, game) {
-        player.X = 9;
-        player.Y = 0;
 
         this.externalObjects = objects;
         this.objects = [player];
 
         for(let i = 0; i < objects.length; i++) {
-            let gameObject;
 
-            switch(objects[i].name) {
-                case 'horizontal-enemy':
-                    gameObject = new HorizontalEnemy(objects[i].x, objects[i].y);
-                    break;
-                case 'vertical-enemy':
-                    gameObject = new VerticalEnemy(objects[i].x, objects[i].y);
-                    break;
-                case 'seeker-enemy':
-                    gameObject = new SeekerEnemy(objects[i].x, objects[i].y);
-                    break;
+            if(objects[i].name === 'player') {
+                player.X = objects[i].x;
+                player.Y = objects[i].y;
+            } else {   
+                let gameObject;
+
+                switch(objects[i].name) {
+                    
+                    case 'horizontal-enemy':
+                        gameObject = new HorizontalEnemy(objects[i].x, objects[i].y);
+                        break;
+                    case 'vertical-enemy':
+                        gameObject = new VerticalEnemy(objects[i].x, objects[i].y);
+                        break;
+                    case 'seeker-enemy':
+                        gameObject = new SeekerEnemy(objects[i].x, objects[i].y);
+                        break;
+                }
+
+                this.objects.push(gameObject);
+
             }
-
-            this.objects.push(gameObject);
+            
         }
         
 

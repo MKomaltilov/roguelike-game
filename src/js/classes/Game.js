@@ -7,6 +7,8 @@ import Enemy from './Enemy.js';
 
 export default class Game {
     constructor(gameData, gameDiv, logsDiv, statisticDiv) {
+        this.turns = 0;
+        this.enemiesKilled = 0;
         this.player = new Player();
         this.board = new Board(gameDiv, gameData.field);
         this.objects = new GameObjects(gameData.objects, this.board.field, this.player, this);
@@ -18,6 +20,7 @@ export default class Game {
     }
 
     action(x, y) {
+        this.turns++;
         if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object === undefined) {
             this.log('Move to ' + x + ', ' + y);
             this.board.field[this.player.X][this.player.Y].object = undefined; 
@@ -41,6 +44,7 @@ export default class Game {
                         this.objects.objects.splice(i, 1);
                     }
                 }
+                this.enemiesKilled++;
                 this.board.field[x][y].object = undefined;
             } else {
 
@@ -56,6 +60,8 @@ export default class Game {
         for(let enemy of this.objects.objects) {
             if(enemy instanceof Enemy) {
                 enemy.action(this);
+                this.board.draw();
+                this.objects.draw();
             }
         }
 
@@ -69,7 +75,7 @@ export default class Game {
     drawStatistic() {
         this.statisticElement.innerHTML = '';
         let playerHP = document.createElement('span');
-        playerHP.innerHTML = 'Player HP: ' + this.player.hitPoints;
+        playerHP.innerHTML = 'Player HP: ' + this.player.hitPoints + ' | Turns: ' + this.turns + ' | Enemies killed: ' + this.enemiesKilled;
         this.statisticElement.appendChild(playerHP);
     }
 
@@ -94,7 +100,7 @@ export default class Game {
 
     checkEnd() {
         if(this.player.hitPoints <= 0) {
-            alert('game over');
+            alert('Player died. Game over.');
             location.reload();
         }
     }
