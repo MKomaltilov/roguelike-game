@@ -24,4 +24,11 @@ should be:
 
 
 Thanks to:
+
 https://game-icons.net - for free icons for prototype
+
+ 
+http://opengameart.org/content/dungeon-crawl-32x32-tiles, 
+&
+the crawl-tiles page: http://code.google.com/p/crawl-tiles/
+for free textures

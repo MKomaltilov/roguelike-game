@@ -7,13 +7,13 @@ html {
     border: 5px solid black;
     margin: 0px;
     font-size: 20px;
-    width: 400px;
+    width: 500px;
 }
 
 #game-field {
     padding: 5px;
     background-color: black;
-    width: 400px;
+    width: 500px;
 }
 
 .game-row {
@@ -23,39 +23,41 @@ html {
 .game-cell {
     display: table-cell;
     border: 0px solid black;
-    min-width: 40px;
-    height: 40px;
+    min-width: 50px;
+    height: 50px;
     text-align: center;
+    background-size: 100%;
     /*padding-top: 10px;*/
 }
 
 .game-cell-wall {
     background-color: white;
-    background-image: url("../img/brick-wall.svg");
+    background-image: url("../img/textures/brick_gray0.png");
 }
 
 .game-cell-floor {
     background-color: white;
+    background-image: url("../img/textures/floor_sand_stone0.png");
 }
 
 .game-cell-finish {
     background-color: rgb(150, 150, 250);
-    background-image: url("../img/dungeon-gate.svg");
+    background-image: url("../img/textures/dngn_closed_door.png");
 }
 
 .game-cell-teleport {
     background-color: yellow;
-    background-image: url("../img/teleport.svg");
+    background-image: url("../img/textures/the_teleporter_vaults.png");
 }
 
 .game-cell-heal-fountain {
     background-color: cyan;
-    background-image: url("../img/heal-fountain.svg");
+    background-image: url("../img/textures/crystal_wall13.png");
 }
 
 .game-cell-trap {
     background-color: rgb(250, 150, 150);
-    background-image: url("../img/wolf-trap.svg");
+    background-image: url("../img/textures/snake0.png");
 }
 
 .game-empty-field:hover {
@@ -72,34 +74,36 @@ html {
 }
 
 .game-object {
-    width: 30px;
-    height: 30px;
-    margin-top: 5px;
-    margin-left: 5px;
+    width: 50px;
+    height: 50px;
+    /* margin-top: 5px;
+    margin-left: 5px; */
 }
 
 .game-object-enemy {
-    background-color: red;
-    background-image: url("../img/orc-head.svg");
+    /* background-color: red; */
+    background-size: 100%;
+    background-image: url("../img/textures/great_orb_of_eyes.png");
 }
 
 .seeker-enemy {
-    background-image: url("../img/werewolf.svg");
+    background-image: url("../img/textures/hell_knight.png");
 }
 
 .game-object-player {
-    background-color: green;
-    background-image: url("../img/dwarf-helmet.svg");
+    /* background-color: green; */
+    background-size: 100%;
+    background-image: url("../img/textures/deep_elf_knight.png");
 }
 
 #game-logs {
-    width:400px;
+    width:500px;
     height:350px;
     background-color:white;
     border: 5px solid black;
     border-top: 0px;
     overflow-y: scroll;
-    max-width:400px;
+    max-width:500px;
     max-height:95px;
 }
 
@@ -111,7 +115,7 @@ html {
 
 .title {
     color: #cccccc;
-    width: 400px;
+    width: 500px;
     text-align: center;
     font-size: 40px;
 }
