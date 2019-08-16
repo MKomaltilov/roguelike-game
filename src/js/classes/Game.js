@@ -48,6 +48,7 @@ export default class Game {
                 }
                 this.enemiesKilled++;
                 this.board.field[x][y].object = undefined;
+                this.board.field[x][y].isBlocked = false;
             } else {
 
             }
