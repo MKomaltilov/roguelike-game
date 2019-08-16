@@ -106,7 +106,11 @@ export default class PathFinder {
 				// console.log("Path generation = ", iterPoint, ", pathGrid = ", pathGrid[iterPoint[0]][iterPoint[1]], " i = ", i);
 				if (--i === 1) {
 					console.log("[PathBuilder] Done [", [iterPoint[0], iterPoint[1]], "]");
-					return [iterPoint[0], iterPoint[1]];
+					if (!game.board.field[iterPoint[0]][iterPoint[1]].isBlocked) {
+						return [iterPoint[0], iterPoint[1]];
+					}
+					console.log("[PathBuilder] But [", [iterPoint[0], iterPoint[1]], "] is blocked!");
+					return undefined;
 				}
 			}
 			console.warn("[PathBuilder] Done without result!");
