@@ -24,9 +24,11 @@ export default class Game {
         if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object === undefined) {
             this.log('Move to ' + x + ', ' + y);
             this.board.field[this.player.X][this.player.Y].object = undefined; 
+            this.board.field[this.player.X][this.player.Y].isBlocked = false;
             this.player.X = x;
             this.player.Y = y;
             this.board.field[this.player.X][this.player.Y].object = this.player;
+            this.board.field[this.player.X][this.player.Y].isBlocked = true;
             
         } else if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object instanceof Enemy) {
             this.log('Fight started!');

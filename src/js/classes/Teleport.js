@@ -18,16 +18,23 @@ export default class Teleport extends Floor {
         }
         
         let newLocation = game.instruments.shuffleArray(teleports)[0];
-        if(newLocation.object === undefined) {
+        if(newLocation.isBlocked !== true) {
             let x = game.player.X;
             let y = game.player.Y;
             game.player.X = newLocation.X;
             game.player.Y = newLocation.Y;
             newLocation.object = game.player;
+            newLocation.isBlocked = true;
             game.board.field[x][y].object = undefined;
+            game.board.field[x][y].isBlocked = false;
             game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y);
         } else {
-            game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
+            if(newLocation.object.type === 'player') {
+                game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because you\'re here.');
+            } else {
+                game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
+            }
+            
         }
         
     }
