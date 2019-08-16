@@ -41,7 +41,11 @@ export default class GameObjects {
         this.field = field;
         this.game = game;
         this.player = player;
-        this.drawObjects(this.objects, field, game);
+        this.draw(this.objects, field, game);
+    }
+
+    updateFields() {
+        
     }
 
     draw() {

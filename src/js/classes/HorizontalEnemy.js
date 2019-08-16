@@ -11,7 +11,7 @@ export default class HorizontalEnemy extends Enemy {
 
     action(game) {
         let field = game.board.field;
-        if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1] instanceof Floor) {
+        if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1].isBlocked !== true) {
             if(field[this.X][this.Y - 1].object instanceof Player) {
                 game.log('Enemy hits player');
                 game.hitPlayer();
@@ -19,13 +19,15 @@ export default class HorizontalEnemy extends Enemy {
                 this.direction = 'right';
             } else {
                 field[this.X][this.Y].object = undefined;
+                field[this.X][this.Y].isBlocked = false;
                 this.Y--;
                 field[this.X][this.Y].object = this;
+                field[this.X][this.Y].isBlocked = true;
             }
         } else {
             this.direction = 'right';
         }
-        if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1] instanceof Floor) {
+        if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1].isBlocked !== true) {
             if(field[this.X][this.Y + 1].object instanceof Player) {
                 game.log('Enemy hits player');
                 game.hitPlayer();
@@ -33,8 +35,10 @@ export default class HorizontalEnemy extends Enemy {
                 this.direction = 'left';
             } else {
                 field[this.X][this.Y].object = undefined;
+                field[this.X][this.Y].isBlocked = false;
                 this.Y++;
                 field[this.X][this.Y].object = this;
+                field[this.X][this.Y].isBlocked = true;
             }
         } else {
             this.direction = 'left';
