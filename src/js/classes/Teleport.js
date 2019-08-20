@@ -1,8 +1,9 @@
 import Floor from './Floor.js';
 
 export default class Teleport extends Floor {
-    constructor(x, y) {
+    constructor(x, y, id) {
         super(x, y);
+        this.id = id;
         this.name = 'teleport';
     }
 
@@ -11,7 +12,7 @@ export default class Teleport extends Floor {
         for(let x in game.board.field) {
             for(let y in game.board.field[x]) {
                 let object = game.board.field[x][y];
-                if(object instanceof Teleport) {
+                if(object instanceof Teleport && object.id === this.id) {
                     teleports.push(object);
                 }
             }
@@ -24,9 +25,9 @@ export default class Teleport extends Floor {
             game.player.X = newLocation.X;
             game.player.Y = newLocation.Y;
             newLocation.object = game.player;
-            newLocation.isBlocked = true;
+            // newLocation.isBlocked = true;
             game.board.field[x][y].object = undefined;
-            game.board.field[x][y].isBlocked = false;
+            // game.board.field[x][y].isBlocked = false;
             game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y);
         } else {
             if(newLocation.object.type === 'player') {

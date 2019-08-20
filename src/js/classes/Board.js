@@ -22,7 +22,7 @@ export default class Board {
                         this.field[x][y] = new Finish(x, y);
                         break;
                     case 'T': 
-                        this.field[x][y] = new Teleport(x, y);
+                        this.field[x][y] = new Teleport(x, y, this.field[x][y].charAt(1));
                         break;
                     case 'X': 
                         this.field[x][y] = new Trap(x, y);
