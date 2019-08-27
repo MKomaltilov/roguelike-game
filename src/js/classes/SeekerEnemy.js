@@ -6,7 +6,8 @@ import PathFinder from './PathFinder.js';
 export default class SeekerEnemy extends Enemy {
     constructor(x, y) {
         super(x, y);
-        this.name = 'seeker-enemy';
+		this.name = 'seeker-enemy';
+		this.hitPoints = 2;
     }
 
     action(game) {
@@ -35,7 +36,7 @@ export default class SeekerEnemy extends Enemy {
 			}
 			
 			if (isPlayerFound) {
-				game.log('Enemy hits player');
+				game.log(this.name + ' hits player');
 				game.hitPlayer();
 			}
 		}

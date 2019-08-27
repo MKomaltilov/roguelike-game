@@ -20,4 +20,8 @@ export default class GameObject {
     set Y(value) {
         this._Y = value;
     }
+
+    interact(game) {
+        console.log(game);
+    }
 }

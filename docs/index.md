@@ -16,7 +16,7 @@ TODO: describe enemies
 
 ### **Board**
 
-This is a game field, contains only cells in matrix with coords [x][y]. Started from upper left point as [0][0]. Each cell contains some *Location* (also *Location* is parent class for all other locations).
+This is a game field, contains only cells in matrix with coords [x][y]. Started from upper left point as [0][0]. Each cell contains some **Location** (also *Location* is parent class for all other locations).
 
 **Location** types:
 

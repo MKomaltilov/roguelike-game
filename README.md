@@ -1,7 +1,5 @@
 **in progress: simple game engine**
 
-**please don't blame me for code now, it SHOULD BE refactored :)**
-
 how to run:
 
 1. Install node.js from https://nodejs.org/

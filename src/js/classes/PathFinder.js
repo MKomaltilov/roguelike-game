@@ -19,7 +19,7 @@ export default class PathFinder {
 		pathGrid[targetPoint[0]][targetPoint[1]] = "F";
 		//console.log(pathGrid);
 		
-		console.log("[Matrix analyzer] Start...");
+		// console.log("[Matrix analyzer] Start...");
 		let dt = 0;
 		let queue = [];
 		let found = false;
@@ -83,8 +83,8 @@ export default class PathFinder {
 		}
 		
 		if (found) {
-			console.log("[Matrix analyzer] Done! ", resultPoint);
-			console.log("[PathBuilder] Start...");
+			// console.log("[Matrix analyzer] Done! ", resultPoint);
+			// console.log("[PathBuilder] Start...");
 			
 			let i = pathGrid[resultPoint[0]][resultPoint[1]];
 			let iterPoint = [ resultPoint[0], resultPoint[1] ];
@@ -105,17 +105,17 @@ export default class PathFinder {
 				}
 				// console.log("Path generation = ", iterPoint, ", pathGrid = ", pathGrid[iterPoint[0]][iterPoint[1]], " i = ", i);
 				if (--i === 1) {
-					console.log("[PathBuilder] Done [", [iterPoint[0], iterPoint[1]], "]");
+					// console.log("[PathBuilder] Done [", [iterPoint[0], iterPoint[1]], "]");
 					if (!game.board.field[iterPoint[0]][iterPoint[1]].isBlocked) {
 						return [iterPoint[0], iterPoint[1]];
 					}
-					console.log("[PathBuilder] But [", [iterPoint[0], iterPoint[1]], "] is blocked!");
+					// console.log("[PathBuilder] But [", [iterPoint[0], iterPoint[1]], "] is blocked!");
 					return undefined;
 				}
 			}
-			console.warn("[PathBuilder] Done without result!");
+			// console.warn("[PathBuilder] Done without result!");
 		} else {
-			console.log("[Matrix analyzer] Done without result!");
+			// console.log("[Matrix analyzer] Done without result!");
 			return undefined;
 		}
 		

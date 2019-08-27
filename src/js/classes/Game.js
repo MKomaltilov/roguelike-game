@@ -28,19 +28,12 @@ export default class Game {
             this.player.X = x;
             this.player.Y = y;
             this.board.field[this.player.X][this.player.Y].object = this.player;
-            //this.board.field[this.player.X][this.player.Y].isBlocked = true;
             
-        } else if(this.board.field[x][y] instanceof Floor && this.board.field[x][y].object instanceof Enemy) {
-            this.log('Fight started!');
-            if(this.instruments.getRandomInRange(1, 6) >= this.player.hitChance) {
-                this.log('Player hits enemy');
-                this.board.field[x][y].object.hitPoints--;
-            } else {
-                this.log('Player misses');
-            }
-            
-            if(this.board.field[x][y].object.hitPoints <= 0) {
-                this.log('Enemy died');
+        } else if(this.board.field[x][y].object !== undefined && !(this.board.field[x][y].object instanceof Player)) {
+            let interaction = this.board.field[x][y].object.interact(this);
+            this.log(interaction.log);
+            if(interaction.result === 'kill') {
+                console.log(this.board.field[x][y].object.interact(this).result);
                 for(let i in this.objects.objects) {
                     if(this.objects.objects[i].X === x && this.objects.objects[i].Y === y) {
                         this.objects.objects.splice(i, 1);
@@ -49,9 +42,8 @@ export default class Game {
                 this.enemiesKilled++;
                 this.board.field[x][y].object = undefined;
                 this.board.field[x][y].isBlocked = false;
-            } else {
-
-            }
+                console.log(this.board.field[x][y]);
+            };
         }
 
         this.board.field[this.player.X][this.player.Y].onStep(this);

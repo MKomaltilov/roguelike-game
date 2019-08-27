@@ -13,4 +13,23 @@ export default class Enemy extends GameObject {
 
     }
 
+    interact(game) {
+        let log = '';
+        let result = 'none';
+        if(game.instruments.getRandomInRange(1, 6) >=  game.player.hitChance) {
+            log = 'Player hits ' + this.name;
+            this.hitPoints--;
+        } else {
+            log = 'Player misses';
+        }
+        if(this.hitPoints <= 0) {
+            log = this.name + ' died';
+            result = 'kill';
+        }
+
+        return {
+            'result': result,
+            'log' : log
+        }
+    }
 }

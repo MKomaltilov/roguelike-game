@@ -3,12 +3,14 @@ import VerticalEnemy from './VerticalEnemy.js';
 import HorizontalEnemy from './HorizontalEnemy.js';
 import SeekerEnemy from './SeekerEnemy.js';
 import Floor from './Floor.js';
+import Enemy from './Enemy.js';
 
 export default class GameObjects {
     constructor(objects, field, player, game) {
 
         this.externalObjects = objects;
         this.objects = [player];
+        this.enemies = [];
 
         for(let i = 0; i < objects.length; i++) {
 
@@ -32,7 +34,9 @@ export default class GameObjects {
                 }
 
                 this.objects.push(gameObject);
-
+                if(gameObject instanceof Enemy) {
+                    this.enemies.push(gameObject);
+                }
             }
             
         }
