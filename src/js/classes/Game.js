@@ -6,18 +6,49 @@ import Board from './Board.js';
 import Enemy from './Enemy.js'; 
 
 export default class Game {
-    constructor(gameData, gameDiv, logsDiv, statisticDiv) {
+    constructor(gameDiv, logsDiv, statisticDiv) {
+        this.levelName;
+        this.turns;
+        this.enemiesKilled;
+        this.player;
+        this.board;
+        this.gameDiv = gameDiv;
+        this.objects;
+        this.instruments;
+        this.logsElement = logsDiv;
+        this.statisticElement = statisticDiv;
+        // this.drawStatistic();
+        this.logs;
+    }
+
+    init(gameData) {
+        this.drop();
         this.levelName = gameData.levelName;
         this.turns = 0;
         this.enemiesKilled = 0;
         this.player = new Player();
-        this.board = new Board(gameDiv, gameData.field);
+        this.board = new Board(this.gameDiv, gameData.field);
         this.objects = new GameObjects(gameData.objects, this.board.field, this.player, this);
         this.instruments = new Instruments();
-        this.logsElement = logsDiv;
-        this.statisticElement = statisticDiv;
+        // this.logsElement = logsDiv;
+        // this.statisticElement = statisticDiv;
         this.drawStatistic();
         this.logs = [];
+    }
+
+    drop() {
+        this.levelName = undefined;
+        this.turns = undefined;
+        this.enemiesKilled = undefined;
+        this.player = undefined;
+        this.board = undefined;
+        // this.gameDiv = gameDiv;
+        this.objects = undefined;
+        this.instruments = undefined;
+        // this.logsElement = logsDiv;
+        // this.statisticElement = statisticDiv;
+        // this.drawStatistic();
+        this.logs = undefined;
     }
 
     action(x, y) {

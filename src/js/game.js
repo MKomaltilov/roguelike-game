@@ -87,16 +87,16 @@ let level_1 = {
 let level_2 = {
     levelName: 'level_2',
     field: [
-        ['H', '0', '1', '0', '0', '0', '0', '0', '0', 'F'],
-        ['T', '0', '1', '0', '0', '0', '0', '0', '0', '0'],
-        ['1', '1', '1', '0', '0', '0', '0', '0', '0', '0'],
-        ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['0', '0', '0', '1', '1', '1', '1', '0', '0', '0'],
+        ['H', '0', '1', '1', '0', '0', '0', '0', '0', 'F'],
+        ['T1', '0', '1', '0', '0', '1', '0', '1', '0', '0'],
+        ['1', '1', '1', '0', '1', '0', '1', '0', '1', '1'],
+        ['T2', '1', '0', 'X', '0', '0', '0', '0', '0', '0'],
+        ['0', '0', 'X', '1', '1', '1', '1', '1', '1', '0'],
         ['0', '0', '0', '0', '0', '0', '1', '0', '0', '0'],
         ['1', '0', '1', '0', '1', '0', '0', '0', '1', '1'],
-        ['0', '0', '1', '1', '1', '0', '1', '1', '1', 'H'],
-        ['0', '1', '1', '0', '0', '0', '0', '0', '0', '0'],
-        ['0', '0', '0', '0', '1', '0', '1', 'T', '1', '0']
+        ['0', '0', '1', '1', '1', '0', '1', '1', '1', 'T1'],
+        ['0', '1', '1', '0', '0', '0', 'T2', '0', '0', '0'],
+        ['0', '0', '0', '0', '1', '0', '1', 'T2', '1', '0']
     ],
     objects: [
         {
@@ -127,12 +127,31 @@ let level_2 = {
             name: 'Hell Knight',
             x: 0,
             y: 1
+        },
+        {
+            type: 'vertical-enemy',
+            name: 'Orb',
+            x: 9,
+            y: 0
+        },
+        {
+            type: 'horizontal-enemy',
+            name: 'Orb',
+            x: 8,
+            y: 3
+        },
+        {
+            type: 'vertical-enemy',
+            name: 'Orb',
+            x: 5,
+            y: 9
         }
-
     ]
 }
 
 
-let game = new Game(level_1, document.getElementById('game-field'), document.getElementById('game-logs'), document.getElementById('game-statistic'));
+let levels = [level_1, level_2]
+let game = new Game(document.getElementById('game-field'), document.getElementById('game-logs'), document.getElementById('game-statistic'));
+game.init(level_2);
 
-console.log(game);
+//console.log(game);
