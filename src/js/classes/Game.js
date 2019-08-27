@@ -7,6 +7,7 @@ import Enemy from './Enemy.js';
 
 export default class Game {
     constructor(gameData, gameDiv, logsDiv, statisticDiv) {
+        this.levelName = gameData.levelName;
         this.turns = 0;
         this.enemiesKilled = 0;
         this.player = new Player();

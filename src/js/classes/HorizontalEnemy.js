@@ -3,9 +3,9 @@ import Floor from './Floor.js';
 import Player from './Player.js';
 
 export default class HorizontalEnemy extends Enemy {
-    constructor(x, y) {
-        super(x, y);
-        this.name = 'horizontal-enemy';
+    constructor(x, y, name = 'Horizontal') {
+        super(x, y, name);
+        this.subtype = 'horizontal-enemy';
         this.direction = 'left';
     }
 
@@ -13,7 +13,7 @@ export default class HorizontalEnemy extends Enemy {
         let field = game.board.field;
         if(this.direction === 'left' && field[this.X][this.Y - 1] !== undefined && field[this.X][this.Y - 1].isBlocked !== true) {
             if(field[this.X][this.Y - 1].object instanceof Player) {
-                game.log('Enemy hits player');
+                game.log(this.name + ' hits player');
                 game.hitPlayer();
             } else if(field[this.X][this.Y - 1].object instanceof Enemy) {
                 this.direction = 'right';
@@ -29,7 +29,7 @@ export default class HorizontalEnemy extends Enemy {
         }
         if(this.direction === 'right' && field[this.X][this.Y + 1] !== undefined && field[this.X][this.Y + 1].isBlocked !== true) {
             if(field[this.X][this.Y + 1].object instanceof Player) {
-                game.log('Enemy hits player');
+                game.log(this.name + ' hits player');
                 game.hitPlayer();
             } else if(field[this.X][this.Y + 1].object instanceof Enemy) {
                 this.direction = 'left';

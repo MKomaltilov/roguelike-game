@@ -14,22 +14,22 @@ export default class GameObjects {
 
         for(let i = 0; i < objects.length; i++) {
 
-            if(objects[i].name === 'player') {
+            if(objects[i].type === 'player') {
                 player.X = objects[i].x;
                 player.Y = objects[i].y;
             } else {   
                 let gameObject;
 
-                switch(objects[i].name) {
+                switch(objects[i].type) {
                     
                     case 'horizontal-enemy':
-                        gameObject = new HorizontalEnemy(objects[i].x, objects[i].y);
+                        gameObject = new HorizontalEnemy(objects[i].x, objects[i].y, objects[i].name);
                         break;
                     case 'vertical-enemy':
-                        gameObject = new VerticalEnemy(objects[i].x, objects[i].y);
+                        gameObject = new VerticalEnemy(objects[i].x, objects[i].y, objects[i].name);
                         break;
                     case 'seeker-enemy':
-                        gameObject = new SeekerEnemy(objects[i].x, objects[i].y);
+                        gameObject = new SeekerEnemy(objects[i].x, objects[i].y, objects[i].name);
                         break;
                 }
 
@@ -66,7 +66,7 @@ export default class GameObjects {
         for(let object of objects) {
             field[object.X][object.Y].object = object;
             let objectElement = document.createElement('div');
-            objectElement.className = 'game-object game-object-'+ object.type + ' ' + object.name;
+            objectElement.className = 'game-object game-object-'+ object.type + ' ' + object.subtype + ' ' + game.levelName + '-' + object.subtype;
             let element = document.getElementById('game-cell-' + object.X + '-' + object.Y);
             element.innerHTML = '';
             element.appendChild(objectElement);

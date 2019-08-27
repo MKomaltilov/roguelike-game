@@ -4,9 +4,9 @@ import Player from './Player.js';
 import PathFinder from './PathFinder.js';
 
 export default class SeekerEnemy extends Enemy {
-    constructor(x, y) {
-        super(x, y);
-		this.name = 'seeker-enemy';
+    constructor(x, y, name = 'Seeker') {
+		super(x, y, name);
+		this.subtype = 'seeker-enemy';
 		this.hitPoints = 2;
     }
 

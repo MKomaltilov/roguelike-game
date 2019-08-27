@@ -2,6 +2,7 @@ import '../scss/main.scss';
 import Game from './classes/Game.js';
 
 let level_1 = {
+    levelName: 'level_1',
     field: [
         ['T1', '0', '0', '0', '0', '0', '0', '0', 'H', '1'],
         ['1', '1', '0', '1', '0', '1', '1', '0', '1', '1'],
@@ -16,57 +17,67 @@ let level_1 = {
     ],
     objects: [
         {
-            name: 'player',
+            type: 'player',
             x: 9,
             y: 0
         },
         {
-            name: 'seeker-enemy',
+            type: 'seeker-enemy',
+            name: 'Hell Knight',
             x: 2,
             y: 5
         },
         {
-            name: 'horizontal-enemy',
+            type: 'horizontal-enemy',
+            name: 'Orb',
             x: 5,
             y: 4
         },
         {
-            name: 'horizontal-enemy',
+            type: 'horizontal-enemy',
+            name: 'Orb',
             x: 3,
             y: 1
         },
         {
-            name: 'horizontal-enemy',
+            type: 'horizontal-enemy',
+            name: 'Orb',
             x: 0,
             y: 3
         },
         {
-            name: 'horizontal-enemy',
+            type: 'horizontal-enemy',
+            name: 'Orb',
             x: 6,
             y: 4
         },
         {
-            name: 'vertical-enemy',
+            type: 'vertical-enemy',
+            name: 'Orb',
             x: 5,
             y: 7
         },
         {
-            name: 'vertical-enemy',
+            type: 'vertical-enemy',
+            name: 'Orb',
             x: 6,
             y: 6
         },
         {
-            name: 'vertical-enemy',
+            type: 'vertical-enemy',
+            name: 'Orb',
             x: 3,
             y: 2
         },
         {
-            name: 'vertical-enemy',
+            type: 'vertical-enemy',
+            name: 'Orb',
             x: 1,
             y: 4
         },
         {
-            name: 'vertical-enemy',
+            type: 'vertical-enemy',
+            name: 'Orb',
             x: 1,
             y: 2
         }
@@ -74,6 +85,7 @@ let level_1 = {
 }
 
 let level_2 = {
+    levelName: 'level_2',
     field: [
         ['0', '0', '0', '0', '0', '0', '0', '0', '0', 'F'],
         ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
@@ -88,17 +100,17 @@ let level_2 = {
     ],
     objects: [
         {
-            name: 'player',
+            type: 'player',
             x: 9,
             y: 0
         },
         {
-            name: 'horizontal-enemy',
+            type: 'horizontal-enemy',
             x: 3,
             y: 5
         },
         {
-            name: 'horizontal-enemy',
+            type: 'horizontal-enemy',
             x: 5,
             y: 4
         }
