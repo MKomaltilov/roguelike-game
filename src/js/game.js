@@ -121,6 +121,12 @@ let level_2 = {
             name: 'Hell Knight',
             x: 9,
             y: 9
+        },
+        {
+            type: 'seeker-enemy',
+            name: 'Hell Knight',
+            x: 0,
+            y: 1
         }
 
     ]
