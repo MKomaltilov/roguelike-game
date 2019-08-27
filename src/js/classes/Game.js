@@ -47,7 +47,7 @@ export default class Game {
             };
         }
 
-        this.board.field[this.player.X][this.player.Y].onStep(this);
+        this.board.field[this.player.X][this.player.Y].onStep(this, this.player);
         
         this.board.draw();
         this.objects.draw();

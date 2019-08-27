@@ -3,8 +3,8 @@ import Floor from './Floor.js';
 import Player from './Player.js';
 
 export default class VerticalEnemy extends Enemy {
-    constructor(x, y, name = 'Vertical') {
-        super(x, y, name);
+    constructor(x, y, name = 'Vertical', hitPoints = 1) {
+        super(x, y, name, hitPoints);
         this.subtype = 'vertical-enemy';
         this.direction = 'down';
     }
@@ -43,5 +43,6 @@ export default class VerticalEnemy extends Enemy {
         } else {
             this.direction = 'down';
         }
+        game.board.field[this.X][this.Y].onStep(game, this);
     }
 }

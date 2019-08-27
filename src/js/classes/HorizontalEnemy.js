@@ -3,8 +3,8 @@ import Floor from './Floor.js';
 import Player from './Player.js';
 
 export default class HorizontalEnemy extends Enemy {
-    constructor(x, y, name = 'Horizontal') {
-        super(x, y, name);
+    constructor(x, y, name = 'Horizontal', hitPoints = 1) {
+        super(x, y, name, hitPoints);
         this.subtype = 'horizontal-enemy';
         this.direction = 'left';
     }
@@ -43,5 +43,6 @@ export default class HorizontalEnemy extends Enemy {
         } else {
             this.direction = 'left';
         }
+        game.board.field[this.X][this.Y].onStep(game, this);
     }
 }

@@ -4,10 +4,9 @@ import Player from './Player.js';
 import PathFinder from './PathFinder.js';
 
 export default class SeekerEnemy extends Enemy {
-    constructor(x, y, name = 'Seeker') {
-		super(x, y, name);
+    constructor(x, y, name = 'Seeker', hitPoints = 2) {
+		super(x, y, name, hitPoints);
 		this.subtype = 'seeker-enemy';
-		this.hitPoints = 2;
     }
 
     action(game) {
@@ -41,5 +40,6 @@ export default class SeekerEnemy extends Enemy {
 			}
 		}
 		/* </TODO: Ruslan Tumasov: Replace it to Vector2dDistance> */
+		game.board.field[this.X][this.Y].onStep(game, this);
     }
 }

@@ -16,7 +16,7 @@ export default class Location extends GameObject {
         
     }
 
-    onStep() {
+    onStep(game, object) {
 
     }
 }

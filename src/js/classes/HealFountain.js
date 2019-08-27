@@ -1,4 +1,5 @@
 import Floor from './Floor.js';
+import Player from './Player.js';
 
 export default class HealFountain extends Floor {
     constructor(x, y) {
@@ -6,8 +7,10 @@ export default class HealFountain extends Floor {
         this.name = 'heal-fountain';
     }
 
-    onStep(game) {
-        if(game.player.hitPoints < 3) game.player.hitPoints++;
-        game.log('Player healed for 1HP. Total HP: ' + game.player.hitPoints);
+    onStep(game, object) {
+        if(object instanceof Player) {
+            if(game.player.hitPoints < 3) game.player.hitPoints++;
+            game.log('Player healed for 1HP. Total HP: ' + game.player.hitPoints);
+        }
     }
 }
