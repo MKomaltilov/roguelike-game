@@ -1,4 +1,5 @@
 import Floor from './Floor.js';
+import Player from './Player.js';
 
 export default class Teleport extends Floor {
     constructor(x, y, id) {
@@ -20,7 +21,7 @@ export default class Teleport extends Floor {
         }
         
         let newLocation = game.instruments.shuffleArray(teleports)[0];
-        if(newLocation.isBlocked !== true) {
+        if(newLocation.isBlocked !== true && newLocation.object === undefined) {
             let x = object.X;
             let y = object.Y;
             object.X = newLocation.X;
@@ -30,12 +31,7 @@ export default class Teleport extends Floor {
             game.board.field[x][y].object = undefined;
             game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y);
         } else {
-            if(newLocation.object.type === 'player') {
-                game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because you\'re here.');
-            } else {
-                game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
-            }
-            
+            game.log('Teleport to: ' + newLocation.X + ', ' + newLocation.Y + ' is NOT POSSIBLE because ' + newLocation.object.name + ' on it.');
         }
         
     }

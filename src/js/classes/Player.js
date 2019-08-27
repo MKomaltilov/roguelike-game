@@ -5,6 +5,7 @@ export default class Player extends GameObject  {
         super(x, y);
         this.hitPoints = 3;
 
+        this.name = 'Player';
         this.type = 'player';
         this.hitChance = 3;
     }
