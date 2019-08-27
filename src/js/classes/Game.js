@@ -33,7 +33,7 @@ export default class Game {
             let interaction = this.board.field[x][y].object.interact(this);
             this.log(interaction.log);
             if(interaction.result === 'kill') {
-                console.log(this.board.field[x][y].object.interact(this).result);
+                // console.log(this.board.field[x][y].object.interact(this).result);
                 for(let i in this.objects.objects) {
                     if(this.objects.objects[i].X === x && this.objects.objects[i].Y === y) {
                         this.objects.objects.splice(i, 1);
@@ -42,7 +42,7 @@ export default class Game {
                 this.enemiesKilled++;
                 this.board.field[x][y].object = undefined;
                 this.board.field[x][y].isBlocked = false;
-                console.log(this.board.field[x][y]);
+                // console.log(this.board.field[x][y]);
             };
         }
 
