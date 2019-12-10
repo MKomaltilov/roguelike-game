@@ -152,6 +152,6 @@ let level_2 = {
 
 let levels = [level_1, level_2]
 let game = new Game(document.getElementById('game-field'), document.getElementById('game-logs'), document.getElementById('game-statistic'));
-game.init(level_2);
+game.init(level_1);
 
 //console.log(game);

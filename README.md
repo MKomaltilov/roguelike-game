@@ -3,14 +3,11 @@
 how to run:
 
 1. Install node.js from https://nodejs.org/
-2. Run "npm install -g webpack"
-3. Run "npm install -g webpack-cli"
-4. Run "npm install" from project root folder
-5. Run "webpack" in project root folder for build it once or "webpack -w" to run watcher
-6. Launch index.html from project root folder
+2. Run "npm install" from project root folder
+3. Run "npm run dev" from project root folder
 
 electron version:
-1. 1-5 steps from standart run
+1. 1-3 steps from standart run
 2. Run "npm install -g eletron"
 3. Run "electron ." in project root folder
 

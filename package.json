@@ -6,6 +6,7 @@
   "main": "electron.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server",
     "build-win": "electron-packager . rglike-game --overwrite --asar=true --platform=win32"
   },
   "author": "Marat Komaltilov",
@@ -16,8 +17,10 @@
     "mocha": "^6.2.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.2.0",
+    "serialize-javascript": "^2.1.2",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.9.0"
   }
 }
